@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <!-- canvas-confetti library for the surprise -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@300;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #ff7eb3;
+            --secondary: #ff758c;
+            --bg: #0f0c29;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Floating Particles Background */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1, h2 {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 100px; /* Space between sections */
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 2s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            background: -webkit-linear-gradient(white, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-card {
+            background: var(--glass);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+            height: 250px; /* Fixed height for uniformity */
+        }
+
+        .photo-card:hover { transform: scale(1.05); }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* The Letter Section */
+        .letter-section {
+            display: flex;
+            justify-content: center;
+        }
+
+        .letter-card {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .letter-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            display: none; /* Hidden initially */
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        /* Buttons */
+        button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 15px 30px;
+            color: white;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+        }
+
+        button:hover { transform: scale(1.1); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Stars (Generated via JS) -->
+    <div class="stars" id="starContainer"></div>
+
+    <div class="container">
+        <!-- Section 1: Hero -->
+        <section class="hero">
+            <h1>Happy Birthday, <br> Doruuu ❤️</h1>
+            <p>Another year around the sun, and you shine brighter than ever.</p>
+            <div class="scroll-indicator">↓ Scroll Down</div>
+        </section>
+
+        <!-- Section 2: Photo Grid -->
+        <section class="gallery">
+            <!-- REPLACE THESE URLS WITH YOUR PHOTOS -->
+            <div class="photo-card"><img src="Snapchat-1819506574.jpg"alt="Memory 1"> </div>
+            <div class="photo-card"><img src="IMG-20260204-WA0058.jpg" alt="Memory 2"></div>
+            <div class="photo-card"><img src="Snapchat-903398579.jpg" alt="Memory 3"></div>
+        </section>
+
+        <!-- Section 3: The Letter -->
+        <section class="letter-section">
+            <div class="letter-card">
+                <h2>A Message For You 💌</h2>
+                <p>Click the button below to read my heart.</p>
+                <button onclick="revealMessage()">Open Letter</button>
+                <div class="letter-content" id="letterText">
+                    <p>Dear Bestie,</p>
+                    <p>Happy Birthday to the most important person in my life! 🎂✨ I don’t even know where to start, because “best friend” feels like such a small word for what you truly are to me. You are my safe place, my biggest supporter, my partner in crime, and the one who understands my silence better than anyone else understands my words. Thank you for standing by me in my worst days and celebrating with me in my best ones. Thank you for the late-night talks, the unstoppable laughter, the random memories, and the comfort you give without even trying. My life is so much brighter because you are in it. I pray this year brings you endless happiness, success, peace, and all the love you deserve. May all your dreams come true — and no matter where life takes us, always remember I’ll be right beside you. I’m so lucky to call you my best friend. 💖 Happy Birthday once again! 🎉✨..</p>
+                    <p>I hope this year brings you as much joy as you bring to everyone around you.</p>
+                    <br>
+                    <p>Forever yours,</p>
+                    <p>Moko</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: The Surprise -->
+        <section class="hero" style="height: 50vh;">
+            <h2>One Last Surprise...</h2>
+            <button id="wishBtn">Make a Wish 🎂</button>
+        </section>
+    </div>
+
+    <script>
+        // 1. Generate Stars Background
+        const starContainer = document.getElementById('starContainer');
+        for(let i=0; i<100; i++) {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.width = '2px';
+            star.style.height = '2px';
+            star.style.background = 'white';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.opacity = Math.random();
+            star.style.animation = `pulse ${Math.random()*3+2}s infinite`;
+            starContainer.appendChild(star);
+        }
+
+        // 2. Reveal Letter Function
+        function revealMessage() {
+            const letter = document.getElementById('letterText');
+            const btn = document.querySelector('.letter-card button');
+            letter.style.display = 'block';
+            letter.style.animation = 'fadeIn 1s ease';
+            btn.style.display = 'none';
+        }
+
+        // 3. Confetti Surprise
+        document.getElementById('wishBtn').addEventListener('click', () => {
+            const duration = 3000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff7eb3', '#ff758c']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff7eb3', '#ff758c']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        });
+    </script>
+</body>
+</html>
+
